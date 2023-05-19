@@ -45,37 +45,6 @@ const Home = () => {
     const newbombMap: number[][] = JSON.parse(JSON.stringify(bombMap));
     const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
     const randomValue = Math.random();
-    console.log(randomValue);
-    const h = 8; // 盤面の高さ
-    const w = 8; 
-    newuserInputs[y][x] = 1;
-    setUserInputs(newuserInputs);
-    let count_bomb = 0;
-    for (let o = 0; o < 8; o++) {
-      for (let p = 0; p < 8; p++) {
-        y = o;
-        x = p;
-        for (let r = -1; r <= 1; r++) {
-          for (let t = -1; t <= 1; t++) {
-            const y_r = y + r;
-            const x_t = x + t;
-            if (
-              newbombMap[y_r] === undefined ||
-              newbombMap[y_r][x_t] === undefined ||
-              newbombMap[y_r][x_t] === 0
-            ) {
-              continue;
-            } else if (newbombMap[y_r][x_t] === 1) {
-              count_bomb = count_bomb + 1;
-              newBoard[y_r][x_t] === count_bomb;
-              console.log('a');
-            } else {
-              continue;
-            }
-          }
-        }
-      }
-    }
     
     //bomb作る
     if (!isPlaying) {
