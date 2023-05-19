@@ -117,37 +117,35 @@
 }
 
 .hoge {
-  width:30px;
-  height:30px;
-  background: url('~/assets/images/icons.png')
+  width: 30px;
+  height: 30px;
+  background: url('~/assets/images/icons.png');
 }
 
 .board1 {
-  background: rgb(167, 170, 167);
+  background: #eae;
   height: 480px;
   width: 330px;
 }
 
 .board2 {
-  background: rgb(206, 224, 206);
+  background: #fea;
   height: 6px;
   width: 270px;
   position: relative; /* 今の位置を基準 */
-  top:100px; /* 上から10px */
+  top: 100px; /* 上から10px */
   left: 30px; /* 左から20px */
 }
 
-
 .cell {
-  background: rgb(206, 224, 206);
+  background: #ffa;
   height: 30px;
   width: 30px;
   border-style: solid;
   float: left;
   position: relative; /* 今の位置を基準 */
-  top:90px; /* 上から10px */
+  top: 90px; /* 上から10px */
   left: px;
-
 }
 
 .stone {
