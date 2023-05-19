@@ -45,7 +45,8 @@ const Home = () => {
     const newbombMap: number[][] = JSON.parse(JSON.stringify(bombMap));
     const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
     const randomValue = Math.random();
-    
+    console.log(randomValue);
+
     //bomb作る
     if (!isPlaying) {
       const bombCount = 10;
@@ -67,9 +68,6 @@ const Home = () => {
     if (newuserInputs[y][x] === 1 && newbombMap[y][x] === 1) {
       alert('爆発');
     }
-    newBoard[y][x] === 28;
-    console.log(newBoard);
-    console.log(userInputs);
   };
 
   // userInputs.forEach((row) => {
