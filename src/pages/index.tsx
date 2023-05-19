@@ -45,6 +45,8 @@ const Home = () => {
     const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
     const randomValue = Math.random();
     console.log(randomValue);
+    const h = 9;
+    const w = 9;
 
     //bomb作る
     if (!isPlaying) {
