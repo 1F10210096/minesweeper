@@ -1,57 +1,133 @@
+import { useState } from 'react';
 import styles from './index.module.css';
 
 const Home = () => {
+  const [userInputs, setUserInputs] = useState<(0 | 1 | 2 | 3)[][]>([
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ]);
+  const bombCount = 0;
+  const [bombMap, setBombMap] = useState([
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ]);
+
+  const board: number[][] = [
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+  ];
+
+  const onClick = (x: number, y: number) => {
+    const newuserInputs: (0 | 1 | 2 | 3)[][] = userInputs.map((row) =>
+      row.map((cell) => cell as 0 | 1 | 2 | 3)
+    );
+    const newbombMap: number[][] = JSON.parse(JSON.stringify(bombMap));
+    const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
+    const randomValue = Math.random();
+    console.log(randomValue);
+    const h = 8; // 盤面の高さ
+    const w = 8; // 盤面の幅
+    newuserInputs[y][x] = 1;
+    setUserInputs(newuserInputs);
+    let count_bomb = 0;
+    for (let o = 0; o < 8; o++) {
+      for (let p = 0; p < 8; p++) {
+        y = o;
+        x = p;
+        for (let r = -1; r <= 1; r++) {
+          for (let t = -1; t <= 1; t++) {
+            const y_r = y + r;
+            const x_t = x + t;
+            if (
+              newbombMap[y_r] === undefined ||
+              newbombMap[y_r][x_t] === undefined ||
+              newbombMap[y_r][x_t] === 0
+            ) {
+              continue;
+            } else if (newbombMap[y_r][x_t] === 1) {
+              count_bomb = count_bomb + 1;
+              newBoard[y_r][x_t] === count_bomb;
+              console.log('a');
+            } else {
+              continue;
+            }
+          }
+        }
+      }
+    }
+    
+    //bomb作る
+    if (!isPlaying) {
+      const bombCount = 10;
+
+      for (let i = 0; i < bombCount; i++) {
+        const y = Math.floor(Math.random() * h);
+        const x = Math.floor(Math.random() * w);
+
+        if (bombMap[y][x] === 0) {
+          bombMap[y][x] = 1;
+        } else if (bombMap[y][x] === 1) {
+          i--;
+        }
+      }
+    }
+
+    console.log(userInputs[y][x]);
+    console.log(bombMap);
+    if (newuserInputs[y][x] === 1 && newbombMap[y][x] === 1) {
+      alert('爆発');
+    }
+    newBoard[y][x] === 28;
+    console.log(newBoard);
+    console.log(userInputs);
+  };
+
+  // userInputs.forEach((row) => {
+  //   const boardRow = [...row];
+  //   bombMap.push(boardRow);
+  // });
+
   return (
     <div className={styles.container}>
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code} style={{ backgroundColor: '#fafafa' }}>
-            pages/index.js
-          </code>
-        </p>
-
-        <div className={styles.grid}>
-          <a className={styles.card} href="https://nextjs.org/docs">
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a className={styles.card} href="https://nextjs.org/learn">
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a className={styles.card} href="https://github.com/vercel/next.js/tree/master/examples">
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            className={styles.card}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
-          </a>
+      <div className={styles.board1}>
+        <div className={styles.board2}>
+          {board.map((row, y) =>
+            row.map((color, x) => (
+              <div className={styles.cell} key={`${x}-${y}`} onClick={() => onClick(x, y)}>
+                {color !== 0 && (
+                  <div
+                    className={styles.stone}
+                    style={{
+                      background: color === 1 ? '#000' : '#fff',
+                    }}
+                  />
+                )}
+              </div>
+            ))
+          )}
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <img src="vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+      </div>
     </div>
   );
 };
