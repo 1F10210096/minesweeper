@@ -47,7 +47,7 @@ const Home = () => {
     const randomValue = Math.random();
     console.log(randomValue);
     const h = 8; // 盤面の高さ
-    const w = 8; // 盤面の幅
+    const w = 8; 
     newuserInputs[y][x] = 1;
     setUserInputs(newuserInputs);
     let count_bomb = 0;
