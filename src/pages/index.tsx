@@ -37,6 +37,7 @@ const Home = () => {
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
   ];
+
   const onClick = (x: number, y: number) => {
     const newuserInputs: (0 | 1 | 2 | 3)[][] = userInputs.map((row) =>
       row.map((cell) => cell as 0 | 1 | 2 | 3)
@@ -71,10 +72,10 @@ const Home = () => {
     }
   };
 
-  // userInputs.forEach((row) => {
-  //   const boardRow = [...row];
-  //   bombMap.push(boardRow);
-  // });
+  userInputs.forEach((row) => {
+    const boardRow = [...row];
+    bombMap.push(boardRow);
+  });
 
   return (
     <div className={styles.container}>
