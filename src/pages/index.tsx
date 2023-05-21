@@ -37,6 +37,7 @@ const Home = () => {
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
   ];
+  //周囲の爆弾を数える
   let a = 0;
   let b = 0;
   let around_bomb = 0;
@@ -63,8 +64,41 @@ const Home = () => {
       around_bomb = 0;
     }
   }
-  console.log(board);
-  console.log(bombMap);
+
+
+  //空白連鎖
+
+  let g = 0;
+  let h = 0;
+  for (let j = 0; j < 9; j++) {
+    for (let k = 0; k < 9; k++) {
+      g = j;
+      h = k;
+      console.log('a')
+      if (userInputs[h][g] === 1) {
+        console.log('b')
+        for (let m = -1; m <= 1; m++) {
+          for (let n = -1; n <= 1; n++) {
+            const g_m = g + m;
+            const h_n = h + n;
+            console.log('c')
+            if (userInputs[g_m] === undefined || userInputs[g_m][h_n] === undefined || board[g_m][h_n] !== -1 ) {
+              continue;
+            }
+            else if (userInputs[g_m][h_n] === 0 && board[g_m][h_n] === -1)
+            {
+              userInputs[g_m][h_n] = 1;
+              console.log('d')
+            }
+          }
+        }
+      }
+    }
+  }
+  console.log(userInputs)
+  console.log(board)
+  console.log(bombMap)
+
   const onClick = (x: number, y: number) => {
     const newuserInputs: (0 | 1 | 2 | 3)[][] = userInputs.map((row) =>
       row.map((cell) => cell as 0 | 1 | 2 | 3)
@@ -75,6 +109,7 @@ const Home = () => {
     const w = 9;
     newuserInputs[y][x] = 1;
     setUserInputs(newuserInputs);
+
     //bomb作る
     if (!isPlaying) {
       const bombCount = 10;
@@ -92,7 +127,6 @@ const Home = () => {
     }
     setBombMap(newbombMap);
   };
-  console.log(userInputs)
 
   return (
     <div className={styles.container}>
