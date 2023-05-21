@@ -40,9 +40,11 @@ const Home = () => {
   //周囲の爆弾を数える
   let a = 0;
   let b = 0;
+  let c = 0;
+  let d = 0;
   let around_bomb = 0;
-  for (let c = 0; c < 9; c++) {
-    for (let d = 0; d < 9; d++) {
+  for (c = 0; c < 9; c++) {
+    for (d = 0; d < 9; d++) {
       a = c;
       b = d;
       for (let e = -1; e <= 1; e++) {
@@ -65,7 +67,6 @@ const Home = () => {
     }
   }
 
-
   //空白連鎖
 
   let g = 0;
@@ -74,32 +75,49 @@ const Home = () => {
     for (let k = 0; k < 9; k++) {
       g = j;
       h = k;
-      console.log('a')
+      console.log('a');
       if (userInputs[h][g] === 1) {
-        console.log('b')
+        console.log('b');
         for (let m = -1; m <= 1; m++) {
           for (let n = -1; n <= 1; n++) {
             const g_m = g + m;
             const h_n = h + n;
-            console.log('c')
-            if (userInputs[g_m] === undefined || userInputs[g_m][h_n] === undefined || board[g_m][h_n] !== -1 ) {
+            console.log('c');
+            if (
+              userInputs[g_m] === undefined ||
+              userInputs[g_m][h_n] === undefined ||
+              board[g_m][h_n] !== -1
+            ) {
               continue;
-            }
-            else if (userInputs[g_m][h_n] === 0 && board[g_m][h_n] === -1)
-            {
+            } else if (userInputs[g_m][h_n] === 0 && board[g_m][h_n] === -1) {
               userInputs[g_m][h_n] = 1;
-              console.log('d')
+              console.log('d');
             }
           }
         }
       }
     }
   }
-  console.log(userInputs)
-  console.log(board)
-  console.log(bombMap)
+  console.log(userInputs);
+  console.log(board);
+  console.log(bombMap);
 
-  const onClick = (x: number, y: number) => {
+  //爆発判定
+  a = 0;
+  b = 0;
+  c = 0;
+  d = 0;
+  for (let c = 0; c < 9; c++) {
+    for (let d = 0; d < 9; d++) {
+      a = c;
+      b = d;
+      if (userInputs[b][a] === 1 && bombMap[b][a] === 1) {
+        alert('爆発');
+      }
+    }
+  }
+
+  const onClick = (x: number, y: number, event: React.MouseEvent<HTMLDivElement>) => {
     const newuserInputs: (0 | 1 | 2 | 3)[][] = userInputs.map((row) =>
       row.map((cell) => cell as 0 | 1 | 2 | 3)
     );
@@ -107,25 +125,40 @@ const Home = () => {
     const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
     const h = 9;
     const w = 9;
-    newuserInputs[y][x] = 1;
-    setUserInputs(newuserInputs);
 
-    //bomb作る
-    if (!isPlaying) {
-      const bombCount = 10;
+    //右クリック時
+    if (event.button === 0) {
+      //クリック判定
+      newuserInputs[y][x] = 1;
+      setUserInputs(newuserInputs);
 
-      let i = 0;
-      while (i < bombCount) {
-        const y = Math.floor(Math.random() * h);
-        const x = Math.floor(Math.random() * w);
+      //爆弾を作る
+      if (!isPlaying) {
+        const bombCount = 10;
 
-        if (newbombMap[y][x] === 0) {
-          newbombMap[y][x] = 1;
-          i++;
+        let i = 0;
+        while (i < bombCount) {
+          const y = Math.floor(Math.random() * h);
+          const x = Math.floor(Math.random() * w);
+
+          if (newbombMap[y][x] === 0) {
+            newbombMap[y][x] = 1;
+            i++;
+          }
         }
       }
+      setBombMap(newbombMap);
+    } // Right-click to place a flag
+    else if (event.button === 2) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (userInputs[y][x] === 0) {
+        newuserInputs[y][x] = 2;
+        setUserInputs(newuserInputs);
+      }
+      return;
     }
-    setBombMap(newbombMap);
   };
 
   return (
@@ -134,7 +167,12 @@ const Home = () => {
         <div className={styles.board2}>
           {board.map((row, y) =>
             row.map((color, x) => (
-              <div className={styles.cell} key={`${x}-${y}`} onClick={() => onClick(x, y)}>
+              <div
+                className={styles.cell}
+                key={`${x}-${y}`}
+                onClick={(event) => onClick(x, y, event)}
+                onContextMenu={(event) => onClick(x, y, event)}
+              >
                 {color !== 0 && (
                   <div
                     className={styles.stone}
