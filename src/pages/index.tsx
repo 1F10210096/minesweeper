@@ -37,45 +37,62 @@ const Home = () => {
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
   ];
-
+  let a = 0;
+  let b = 0;
+  let around_bomb = 0;
+  for (let c = 0; c < 9; c++) {
+    for (let d = 0; d < 9; d++) {
+      a = c;
+      b = d;
+      for (let e = -1; e <= 1; e++) {
+        for (let f = -1; f <= 1; f++) {
+          const a_e = a + e;
+          const b_f = b + f;
+          if (
+            bombMap[b_f] === undefined ||
+            bombMap[b_f][a_e] === undefined ||
+            bombMap[b_f][a_e] === 0
+          ) {
+            continue;
+          } else if (bombMap[b_f][a_e] === 1) {
+            around_bomb++;
+            board[b][a] = around_bomb;
+          }
+        }
+      }
+      around_bomb = 0;
+    }
+  }
+  console.log(board);
+  console.log(bombMap);
   const onClick = (x: number, y: number) => {
     const newuserInputs: (0 | 1 | 2 | 3)[][] = userInputs.map((row) =>
       row.map((cell) => cell as 0 | 1 | 2 | 3)
     );
     const newbombMap: number[][] = JSON.parse(JSON.stringify(bombMap));
     const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
-    const randomValue = Math.random();
-    console.log(randomValue);
     const h = 9;
     const w = 9;
-
+    newuserInputs[y][x] = 1;
+    setUserInputs(newuserInputs);
     //bomb作る
     if (!isPlaying) {
       const bombCount = 10;
 
-      for (let i = 0; i < bombCount; i++) {
+      let i = 0;
+      while (i < bombCount) {
         const y = Math.floor(Math.random() * h);
         const x = Math.floor(Math.random() * w);
 
-        if (bombMap[y][x] === 0) {
-          bombMap[y][x] = 1;
-        } else if (bombMap[y][x] === 1) {
-          i--;
+        if (newbombMap[y][x] === 0) {
+          newbombMap[y][x] = 1;
+          i++;
         }
       }
     }
-
-    console.log(userInputs[y][x]);
-    console.log(bombMap);
-    if (newuserInputs[y][x] === 1 && newbombMap[y][x] === 1) {
-      alert('爆発');
-    }
+    setBombMap(newbombMap);
   };
-
-  userInputs.forEach((row) => {
-    const boardRow = [...row];
-    bombMap.push(boardRow);
-  });
+  console.log(userInputs)
 
   return (
     <div className={styles.container}>
