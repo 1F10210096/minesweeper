@@ -53,6 +53,16 @@ const Home = () => {
     row.map((cell) => cell as 0 | 1 | 2 | 3)
   );
   const newbombMap: number[][] = JSON.parse(JSON.stringify(bombMap));
+
+  const handleButtonClick = () => {
+    // userInputs と bombMap の配列をリセットする
+    const resetuserInputs: (0 | 1 | 2 | 3)[][] = userInputs.map((row) => row.map(() => 0));
+    const resetBombMap: (0 | 1 | 2 | 3)[][] = newbombMap.map((row) => row.map(() => 0));
+
+    setUserInputs(resetuserInputs);
+    setBombMap(resetBombMap);
+  };
+
   //周囲の爆弾を数える
   let a = 0;
   let b = 0;
@@ -101,12 +111,11 @@ const Home = () => {
         console.log('a');
         if (board[y_e] === undefined || board[y_e][x_f] === undefined) {
           continue;
-        } 
-        else if (board[y_e][x_f] !== -1){
+        } else if (board[y_e][x_f] !== -1) {
           board2[y_e][x_f] = 0;
-        }
-        else if (board[y_e][x_f] === -1) {
+        } else if (board[y_e][x_f] === -1) {
           console.log('b');
+          board2[y_e][x_f] = 0;
           board[y_e][x_f] = 0;
           saiki(y_e, x_f);
         }
@@ -122,37 +131,49 @@ const Home = () => {
     }
   }
 
+  //爆発判定
+  for (let a = 0; a < 9; a++) {
+    for (let b = 0; b < 9; b++) {
+      if (userInputs[b][a] === 1 && bombMap[b][a] === 1) {
+        alert('爆発');
+        for (let a = 0; a < 9; a++) {
+          for (let b = 0; b < 9; b++) {
+            board2[b][a] = 0;
+            if (board[b][a] === -1) {
+              board2[b][a] = 0;
+              board[b][a] = 0;
+            }
+          }
+        }
+      }
+    }
+  }
 
   for (let h = 0; h < 9; h++) {
     for (let g = 0; g < 9; g++) {
-      if (board[h][g] !== 0 && userInputs[h][g] !== 1 && board2[h][g] === -1) {
+      if (userInputs[h][g] !== 1 && board2[h][g] === -1) {
         board[h][g] = -1;
       }
     }
   }
 
-
- 
-
-
   console.log(userInputs);
   console.log(bombMap);
   console.log(board);
 
-  //爆発判定
-  a = 0;
-  b = 0;
-  c = 0;
-  d = 0;
-  for (let c = 0; c < 9; c++) {
-    for (let d = 0; d < 9; d++) {
-      a = c;
-      b = d;
-      if (userInputs[b][a] === 1 && bombMap[b][a] === 1) {
-        alert('爆発');
+  let count = 0;
+  for (let h = 0; h < 9; h++) {
+    for (let g = 0; g < 9; g++) {
+      if (board[h][g] === -1) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        count++;
       }
     }
   }
+  if (count === 10) {
+    alert('クリア');
+  }
+  console.log(count);
 
   const onClick = (x: number, y: number, event: React.MouseEvent<HTMLDivElement>) => {
     const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
@@ -179,6 +200,9 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <div className={styles.board1}>
+        <div className={styles.button} onClick={handleButtonClick}>
+          a
+        </div>
         <div className={styles.board2}>
           {board.map((row, y) =>
             row.map((color, x) => (

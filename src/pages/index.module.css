@@ -123,15 +123,20 @@
 }
 
 .board1 {
-  background: #eae;
+  background: rgb(202 200 202);
   height: 480px;
   width: 330px;
+  position: relative;
+  top: 50px;
 }
 
 .board2 {
-  background: rgb(212, 212, 211);
+  background: rgb(212 212 211);
   height: 270px;
   width: 270px;
+  position: relative;
+  top: 120px;
+  left: 30px
 }
 
 .cell {
@@ -157,7 +162,16 @@
 }
 
 .stone {
-  background: rgb(153, 151, 151);
+  background: rgb(153 151 151);
   width: 30px;
   height: 30px;
+}
+
+.button {
+  background: rgb(223, 20, 139);
+  height: 30px;
+  width: 30px;
+  position: relative;
+  top: 50px;
+  left: 150px
 }
