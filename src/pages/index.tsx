@@ -37,6 +37,18 @@ const Home = () => {
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
   ];
 
+  const board2: number[][] = [
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+  ];
+
   const newuserInputs: (0 | 1 | 2 | 3)[][] = userInputs.map((row) =>
     row.map((cell) => cell as 0 | 1 | 2 | 3)
   );
@@ -87,9 +99,13 @@ const Home = () => {
         const y_e = y + e;
         const x_f = x + f;
         console.log('a');
-        if (board[y_e] === undefined || board[y_e][x_f] === undefined || board[y_e][x_f] !== -1) {
+        if (board[y_e] === undefined || board[y_e][x_f] === undefined) {
           continue;
-        } else if (board[y_e][x_f] === -1) {
+        } 
+        else if (board[y_e][x_f] !== -1){
+          board2[y_e][x_f] = 0;
+        }
+        else if (board[y_e][x_f] === -1) {
           console.log('b');
           board[y_e][x_f] = 0;
           saiki(y_e, x_f);
@@ -106,22 +122,10 @@ const Home = () => {
     }
   }
 
-  //   for (let e = -1; e <= 1; e++) {
-  //     for (let f = -1; f <= 1; f++) {
-  //       const y_e = y + e;
-  //       const x_f = x + f;
-  //       if (board[y_e] === undefined || board[y_e][x_f] === undefined || board[y_e][x_f] !== -1) {
-  //         continue;
-  //       } else if (userInputs[y_e][x_f] === 1 && board[y_e][x_f] === -1) {
-  //         userInputs[y_e][x_f] = 1;
-  //       }
-  //     }
-  //   }
-  // }
 
   for (let h = 0; h < 9; h++) {
     for (let g = 0; g < 9; g++) {
-      if (board[h][g] !== 0 && userInputs[h][g] !== 1) {
+      if (board[h][g] !== 0 && userInputs[h][g] !== 1 && board2[h][g] === -1) {
         board[h][g] = -1;
       }
     }
@@ -136,19 +140,19 @@ const Home = () => {
   console.log(board);
 
   //爆発判定
-  // a = 0;
-  // b = 0;
-  // c = 0;
-  // d = 0;
-  // for (let c = 0; c < 9; c++) {
-  //   for (let d = 0; d < 9; d++) {
-  //     a = c;
-  //     b = d;
-  //     if (userInputs[b][a] === 1 && bombMap[b][a] === 1) {
-  //       alert('爆発');
-  //     }
-  //   }
-  // }
+  a = 0;
+  b = 0;
+  c = 0;
+  d = 0;
+  for (let c = 0; c < 9; c++) {
+    for (let d = 0; d < 9; d++) {
+      a = c;
+      b = d;
+      if (userInputs[b][a] === 1 && bombMap[b][a] === 1) {
+        alert('爆発');
+      }
+    }
+  }
 
   const onClick = (x: number, y: number, event: React.MouseEvent<HTMLDivElement>) => {
     const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
