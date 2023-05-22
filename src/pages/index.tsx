@@ -13,7 +13,6 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
-  const bombCount = 0;
   const [bombMap, setBombMap] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -37,6 +36,11 @@ const Home = () => {
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
   ];
+
+  const newuserInputs: (0 | 1 | 2 | 3)[][] = userInputs.map((row) =>
+    row.map((cell) => cell as 0 | 1 | 2 | 3)
+  );
+  const newbombMap: number[][] = JSON.parse(JSON.stringify(bombMap));
   //周囲の爆弾を数える
   let a = 0;
   let b = 0;
@@ -67,98 +71,105 @@ const Home = () => {
     }
   }
 
+  for (let h = 0; h < 9; h++) {
+    for (let g = 0; g < 9; g++) {
+      if (bombMap[g][h] === 1) {
+        board[g][h] = 11;
+      }
+    }
+  }
+
   //空白連鎖
 
-  let g = 0;
-  let h = 0;
-  for (let j = 0; j < 9; j++) {
-    for (let k = 0; k < 9; k++) {
-      g = j;
-      h = k;
-      console.log('a');
-      if (userInputs[h][g] === 1) {
-        console.log('b');
-        for (let m = -1; m <= 1; m++) {
-          for (let n = -1; n <= 1; n++) {
-            const g_m = g + m;
-            const h_n = h + n;
-            console.log('c');
-            if (
-              userInputs[g_m] === undefined ||
-              userInputs[g_m][h_n] === undefined ||
-              board[g_m][h_n] !== -1
-            ) {
-              continue;
-            } else if (userInputs[g_m][h_n] === 0 && board[g_m][h_n] === -1) {
-              userInputs[g_m][h_n] = 1;
-              console.log('d');
-            }
-          }
+  function saiki(y: number, x: number) {
+    for (let e = -1; e <= 1; e++) {
+      for (let f = -1; f <= 1; f++) {
+        const y_e = y + e;
+        const x_f = x + f;
+        console.log('a');
+        if (board[y_e] === undefined || board[y_e][x_f] === undefined || board[y_e][x_f] !== -1) {
+          continue;
+        } else if (board[y_e][x_f] === -1) {
+          console.log('b');
+          board[y_e][x_f] = 0;
+          saiki(y_e, x_f);
         }
       }
     }
   }
-  console.log(userInputs);
-  console.log(board);
-  console.log(bombMap);
 
-  //爆発判定
-  a = 0;
-  b = 0;
-  c = 0;
-  d = 0;
-  for (let c = 0; c < 9; c++) {
-    for (let d = 0; d < 9; d++) {
-      a = c;
-      b = d;
-      if (userInputs[b][a] === 1 && bombMap[b][a] === 1) {
-        alert('爆発');
+  for (let h = 0; h < 9; h++) {
+    for (let g = 0; g < 9; g++) {
+      if (userInputs[g][h] === 1 && board[g][h] === -1) {
+        saiki(g, h);
       }
     }
   }
 
+  //   for (let e = -1; e <= 1; e++) {
+  //     for (let f = -1; f <= 1; f++) {
+  //       const y_e = y + e;
+  //       const x_f = x + f;
+  //       if (board[y_e] === undefined || board[y_e][x_f] === undefined || board[y_e][x_f] !== -1) {
+  //         continue;
+  //       } else if (userInputs[y_e][x_f] === 1 && board[y_e][x_f] === -1) {
+  //         userInputs[y_e][x_f] = 1;
+  //       }
+  //     }
+  //   }
+  // }
+
+  for (let h = 0; h < 9; h++) {
+    for (let g = 0; g < 9; g++) {
+      if (board[h][g] !== 0 && userInputs[h][g] !== 1) {
+        board[h][g] = -1;
+      }
+    }
+  }
+
+
+ 
+
+
+  console.log(userInputs);
+  console.log(bombMap);
+  console.log(board);
+
+  //爆発判定
+  // a = 0;
+  // b = 0;
+  // c = 0;
+  // d = 0;
+  // for (let c = 0; c < 9; c++) {
+  //   for (let d = 0; d < 9; d++) {
+  //     a = c;
+  //     b = d;
+  //     if (userInputs[b][a] === 1 && bombMap[b][a] === 1) {
+  //       alert('爆発');
+  //     }
+  //   }
+  // }
+
   const onClick = (x: number, y: number, event: React.MouseEvent<HTMLDivElement>) => {
-    const newuserInputs: (0 | 1 | 2 | 3)[][] = userInputs.map((row) =>
-      row.map((cell) => cell as 0 | 1 | 2 | 3)
-    );
-    const newbombMap: number[][] = JSON.parse(JSON.stringify(bombMap));
     const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
-    const h = 9;
-    const w = 9;
 
-    //右クリック時
-    if (event.button === 0) {
-      //クリック判定
-      newuserInputs[y][x] = 1;
-      setUserInputs(newuserInputs);
+    newuserInputs[y][x] = 1;
 
-      //爆弾を作る
-      if (!isPlaying) {
-        const bombCount = 10;
+    //爆弾を作る
+    if (!isPlaying) {
+      let i = 0;
+      while (i < 10) {
+        const y = Math.floor(Math.random() * 9);
+        const x = Math.floor(Math.random() * 9);
 
-        let i = 0;
-        while (i < bombCount) {
-          const y = Math.floor(Math.random() * h);
-          const x = Math.floor(Math.random() * w);
-
-          if (newbombMap[y][x] === 0) {
-            newbombMap[y][x] = 1;
-            i++;
-          }
+        if (newbombMap[y][x] === 0 && newuserInputs[y][x] !== 1) {
+          newbombMap[y][x] = 1;
+          i++;
         }
       }
       setBombMap(newbombMap);
-    } // Right-click to place a flag
-    else if (event.button === 2) {
-      event.preventDefault();
-      event.stopPropagation();
-
-      if (userInputs[y][x] === 0) {
-        newuserInputs[y][x] = 2;
-        setUserInputs(newuserInputs);
-      }
-      return;
     }
+    setUserInputs(newuserInputs);
   };
 
   return (
@@ -173,14 +184,24 @@ const Home = () => {
                 onClick={(event) => onClick(x, y, event)}
                 onContextMenu={(event) => onClick(x, y, event)}
               >
-                {color !== 0 && (
-                  <div
-                    className={styles.stone}
-                    style={{
-                      background: color === 1 ? '#000' : '#fff',
-                    }}
-                  />
-                )}
+                {color !== 0 &&
+                  (color !== -1 && color !== 9 && color !== 10 ? (
+                    <div
+                      className={styles.icon}
+                      style={{ backgroundPosition: `${-(color - 1) * 30}px` }}
+                    />
+                  ) : (
+                    color < 11 && (
+                      <div className={styles.stone}>
+                        {(board[y][x] === 9 || board[y][x] === 10) && (
+                          <div
+                            className={styles.flag}
+                            style={{ backgroundPosition: `${-(color - 1) * 100}%` }}
+                          />
+                        )}
+                      </div>
+                    )
+                  ))}
               </div>
             ))
           )}

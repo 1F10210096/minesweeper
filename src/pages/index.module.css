@@ -129,27 +129,35 @@
 }
 
 .board2 {
-  background: #fea;
-  height: 6px;
+  background: rgb(212, 212, 211);
+  height: 270px;
   width: 270px;
-  position: relative; /* 今の位置を基準 */
-  top: 100px; /* 上から10px */
-  left: 30px; /* 左から20px */
 }
 
 .cell {
-  background: #ffa;
   height: 30px;
   width: 30px;
   border-style: solid;
   float: left;
-  position: relative; /* 今の位置を基準 */
-  top: 90px; /* 上から10px */
-  left: px;
+}
+
+.icon {
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  background: url('~/assets/images/icons.png');
+}
+
+.flag {
+  height: 100%;
+  width: 100%;
+  background: url('~/assets/images/icons.png');
+  background-size: 1400%;
 }
 
 .stone {
-  background: white;
+  background: rgb(153, 151, 151);
   width: 30px;
   height: 30px;
 }
