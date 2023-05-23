@@ -123,7 +123,7 @@
 }
 
 .board1 {
-  background: rgb(202 200 202);
+  background: rgb(204 203 204);
   height: 480px;
   width: 330px;
   position: relative;
@@ -131,18 +131,20 @@
 }
 
 .board2 {
-  background: rgb(212 212 211);
+  background: rgb(207 207 207);
   height: 270px;
   width: 270px;
   position: relative;
   top: 120px;
-  left: 30px
+  left: 30px;
 }
 
 .cell {
   height: 30px;
   width: 30px;
   border-style: solid;
+  border-width: 1px;
+  border-color: #767677;
   float: left;
 }
 
@@ -162,16 +164,18 @@
 }
 
 .stone {
-  background: rgb(153 151 151);
+  background: rgb(202, 202, 202);
   width: 30px;
   height: 30px;
+  border: solid 4px;
+  border-color: rgb(253, 253, 253) rgb(85, 83, 83) rgb(148, 143, 143) rgb(214, 214, 213);
 }
 
 .button {
-  background: rgb(223, 20, 139);
+  background: rgb(223 20 139);
   height: 30px;
   width: 30px;
   position: relative;
   top: 50px;
-  left: 150px
+  left: 150px;
 }
