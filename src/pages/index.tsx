@@ -189,6 +189,7 @@ const Home = () => {
 
   if (flagCount + bombCount === 10) {
     alert('クリア');
+    
   }
 
   const onClick = (x: number, y: number, event: React.MouseEvent<HTMLDivElement>) => {
@@ -225,16 +226,16 @@ const Home = () => {
           }
         }
         setBombMap(newbombMap);
-        // let countN = 0;
-        // const interval_id= undefined;
-        // setInterval(() => {
-        //   countN = countN + 1;
-        //   const newCount: number[][] = [[countN]];
-        //   setCount(newCount);
-        //   if (flagCount + bombCount === 10) {
-        //     clearInterval(interval_id);
-        //   }
-        // }, 1000);
+        let countN = 0;
+        const interval_id= undefined;
+        setInterval(() => {
+          countN = countN + 1;
+          const newCount: number[][] = [[countN]];
+          setCount(newCount);
+          if (flagCount + bombCount === 10) {
+            clearInterval(interval_id);
+          }
+        }, 1000);
       }
       setUserInputs(newuserInputs);
     }
