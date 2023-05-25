@@ -1,8 +1,8 @@
-import { useBoard } from '../hooks/useBoard';
+import { useIndex } from '../hooks/useIndex';
 import styles from './index.module.css';
 
 const Home = () => {
-  const { board, onClick, handleButtonClick, count } = useBoard();
+  const { board, onClick, handleButtonClick, count } = useIndex();
 
   return (
     <div className={styles.container}>
