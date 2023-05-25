@@ -128,15 +128,30 @@
   width: 330px;
   position: relative;
   top: 50px;
+  border: solid 6px;
+  border-color: rgb(253 253 253) rgb(85 83 83) rgb(139 134 134) rgb(255 255 255);
 }
 
 .board2 {
-  background: rgb(207 207 207);
-  height: 270px;
-  width: 270px;
+  background: rgb(200 195 195);
+  height: 290px;
+  width: 290px;
   position: relative;
-  top: 120px;
-  left: 30px;
+  top: 15px;
+  left: 15px;
+  border: solid 10px;
+  border-color: rgb(106 104 104) rgb(227 224 224) rgb(234 231 231) rgb(139 139 136);
+}
+
+.board3 {
+  background: rgb(202 202 202);
+  height: 120px;
+  width: 290px;
+  position: relative;
+  top: -10px;
+  left: 15px;
+  border: solid 10px;
+  border-color: rgb(106 104 104) rgb(227 224 224) rgb(234 231 231) rgb(139 139 136);
 }
 
 .cell {
@@ -164,18 +179,24 @@
 }
 
 .stone {
-  background: rgb(202, 202, 202);
+  background: rgb(202 202 202);
   width: 30px;
   height: 30px;
   border: solid 4px;
-  border-color: rgb(253, 253, 253) rgb(85, 83, 83) rgb(148, 143, 143) rgb(214, 214, 213);
+  border-color: rgb(253 253 253) rgb(85 83 83) rgb(148 143 143) rgb(214 214 213);
 }
 
 .button {
-  background: rgb(223 20 139);
-  height: 30px;
-  width: 30px;
+  background: rgb(202 202 202);
+  height: 50px;
+  width: 50px;
   position: relative;
-  top: 50px;
-  left: 150px;
+  top: 25px;
+  left: 120px;
+  border: solid 6px;
+  border-color: rgb(253 253 253) rgb(85 83 83) rgb(148 143 143) rgb(214 214 213);
+  background: url('~/assets/images/icons.png');
+  background-position: -412px 0;
+  background-size: 1380%;
 }
+
