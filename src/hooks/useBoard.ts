@@ -46,7 +46,7 @@ export const useBoard = ({
     //     }
     //   };
     // }, [count]);
-
+    //a
     //周囲の爆弾を数える
     let a = 0;
     let b = 0;
